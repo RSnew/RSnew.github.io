@@ -312,6 +312,9 @@ footer {
 <body>
 
 <!-- Dynamic Island Nav -->
+<!-- Progress Bar -->
+<div id="progress" style="position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue1),var(--blue4));z-index:200;width:0;transition:width 0.15s ease-out;border-radius:0 2px 2px 0;"></div>
+
 <nav class="island" id="island">
   <span class="dot"></span>
   <span>RSnew</span>
@@ -429,6 +432,10 @@ window.addEventListener('scroll', () => {
     const rate = 0.05 + i * 0.02;
     sh.style.transform += ` translateY(${s * rate}px)`;
   });
+
+  // Progress bar
+  const docH = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('progress').style.width = (s / docH * 100) + '%';
 
   lastScroll = s;
 });
