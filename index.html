@@ -3,26 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RSnew</title>
+<title>RSnew — 个人主页</title>
 <style>
 :root {
-  --bg: #0a0a0f;
-  --surface: #12121a;
-  --surface2: #1a1a2e;
-  --accent: #6c63ff;
-  --accent2: #e94560;
-  --text: #e8e8f0;
-  --text2: #8888aa;
+  --bg: #f8fafc;
+  --white: #ffffff;
+  --blue1: #1a73e8;
+  --blue2: #4a9ff5;
+  --blue3: #7ec8f8;
+  --blue-light: #e8f4fd;
+  --blue-bg: #eef6ff;
+  --dark: #1a2332;
+  --text: #2c3e50;
+  --text2: #6b7c93;
   --card-radius: 20px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
-html {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  overflow-x: hidden;
-}
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   background: var(--bg);
@@ -32,97 +30,135 @@ body {
   overflow-x: hidden;
 }
 
-/* --- Smooth spring scroll physics --- */
-@supports (overscroll-behavior: contain) {
-  html { overscroll-behavior: contain; }
-}
-
 /* --- Hero --- */
 .hero {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
   position: relative;
   overflow: hidden;
+  background: var(--white);
 }
 
-.hero::before {
-  content: '';
+.hero-left {
+  flex: 1;
+  padding: 80px;
+  padding-left: max(80px, 8vw);
+  z-index: 2;
+}
+
+.hero-right {
   position: absolute;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(108,99,255,0.15) 0%, transparent 70%);
-  top: -100px; right: -100px;
-  animation: float 8s ease-in-out infinite;
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(233,69,96,0.1) 0%, transparent 70%);
-  bottom: -50px; left: -50px;
-  animation: float 10s ease-in-out infinite reverse;
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(30px, -30px) scale(1.1); }
-}
-
-.hero-content {
-  text-align: center;
+  right: -80px;
+  top: -80px;
+  width: 55vw;
+  height: 120vh;
+  overflow: hidden;
   z-index: 1;
+}
+
+.circle-main {
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue2) 0%, var(--blue3) 100%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-30%, -50%);
+  opacity: 0.25;
+  animation: floatCircle 12s ease-in-out infinite;
+}
+
+.circle-small {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--blue1);
+  position: absolute;
+  top: 35%;
+  right: 15%;
+  opacity: 0.6;
+  animation: floatSmall 6s ease-in-out infinite;
+}
+
+.circle-outline {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 2px solid var(--blue3);
+  position: absolute;
+  bottom: 20%;
+  right: 25%;
+  opacity: 0.3;
+  animation: floatSmall 8s ease-in-out infinite reverse;
+}
+
+@keyframes floatCircle {
+  0%, 100% { transform: translate(-30%, -50%) scale(1); }
+  50% { transform: translate(-28%, -48%) scale(1.03); }
+}
+
+@keyframes floatSmall {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.hero-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--blue1);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
   opacity: 0;
-  transform: translateY(40px);
-  animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
 }
 
 .hero h1 {
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
   font-weight: 800;
+  color: var(--dark);
   letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--text) 0%, var(--accent) 50%, var(--accent2) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
 }
 
 .hero .subtitle {
-  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-size: clamp(1rem, 2vw, 1.25rem);
   color: var(--text2);
-  margin-top: 16px;
+  font-style: italic;
+  margin-bottom: 40px;
   opacity: 0;
-  animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
 }
 
 .hero .tags {
   display: flex;
   gap: 10px;
-  justify-content: center;
   flex-wrap: wrap;
-  margin-top: 32px;
   opacity: 0;
-  animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
 }
 
 .tag {
-  padding: 6px 16px;
-  border-radius: 20px;
-  background: var(--surface2);
-  color: var(--text2);
+  padding: 8px 18px;
+  border-radius: 25px;
+  background: var(--blue-light);
+  color: var(--blue1);
   font-size: 14px;
-  font-weight: 500;
-  border: 1px solid rgba(255,255,255,0.06);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: default;
 }
 
 .tag:hover {
-  transform: translateY(-2px) scale(1.05);
-  background: var(--accent);
+  transform: translateY(-3px) scale(1.08);
+  background: var(--blue1);
   color: white;
-  border-color: var(--accent);
+  box-shadow: 0 8px 25px rgba(26, 115, 232, 0.3);
 }
 
 .scroll-hint {
@@ -130,218 +166,152 @@ body {
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 3;
   opacity: 0;
   animation: fadeIn 1s 1.5s forwards, bounce 2s 2s infinite;
 }
 
 .scroll-hint span {
   display: block;
-  width: 24px; height: 24px;
+  width: 20px; height: 20px;
   border-right: 2px solid var(--text2);
   border-bottom: 2px solid var(--text2);
   transform: rotate(45deg);
 }
 
-@keyframes slideUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  to { opacity: 0.5; }
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(12px); }
-}
+@keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { to { opacity: 0.4; } }
+@keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
 
 /* --- Sections --- */
 section {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 100px 24px;
+  padding: 100px 32px;
 }
 
 .section-title {
   font-size: clamp(1.8rem, 4vw, 2.5rem);
-  font-weight: 700;
+  font-weight: 800;
+  color: var(--dark);
   margin-bottom: 48px;
   letter-spacing: -0.02em;
 }
 
-.section-title .dot {
+.section-title .bar {
   display: inline-block;
-  width: 10px; height: 10px;
-  background: var(--accent);
-  border-radius: 50%;
-  margin-right: 12px;
-  animation: pulse 2s infinite;
+  width: 40px;
+  height: 4px;
+  background: var(--blue1);
+  border-radius: 2px;
+  margin-right: 14px;
+  vertical-align: middle;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
-}
-
-/* --- Project Cards --- */
+/* --- Cards --- */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
 }
 
 .project-card {
-  background: var(--surface);
+  background: var(--white);
   border-radius: var(--card-radius);
-  padding: 32px;
-  border: 1px solid rgba(255,255,255,0.04);
+  padding: 36px;
+  border: 1px solid #e8edf2;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-decoration: none;
   color: inherit;
   display: block;
-  position: relative;
-  overflow: hidden;
-}
-
-.project-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(108,99,255,0.05), rgba(233,69,96,0.05));
-  opacity: 0;
-  transition: opacity 0.5s;
 }
 
 .project-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  border-color: rgba(108,99,255,0.3);
-  box-shadow: 0 20px 60px rgba(108,99,255,0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(26, 115, 232, 0.12);
+  border-color: var(--blue2);
 }
 
-.project-card:hover::before { opacity: 1; }
-
-/* Spring bounce on click */
 .project-card:active {
   transform: translateY(-4px) scale(0.98);
-  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.project-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 8px;
-  position: relative;
+  transition: all 0.12s;
 }
 
 .project-card .lang {
   display: inline-block;
-  padding: 2px 10px;
+  padding: 4px 12px;
   border-radius: 12px;
   font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 12px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  background: var(--blue-light);
+  color: var(--blue1);
 }
 
-.lang-cpp { background: #00599c22; color: #659ad2; }
-.lang-rust { background: #dea58422; color: #dea584; }
-.lang-swift { background: #f0523022; color: #f05230; }
-.lang-python { background: #306998; color: #ffd43b; }
-.lang-vue { background: #42b88322; color: #42b883; }
+.project-card h3 {
+  font-size: 1.3rem;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
 
 .project-card p {
   color: var(--text2);
   font-size: 14px;
   line-height: 1.7;
-  position: relative;
 }
 
-/* --- Tech Stack --- */
+/* --- Stack --- */
 .stack-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 14px;
 }
 
 .stack-item {
-  background: var(--surface);
-  border-radius: 14px;
-  padding: 20px;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 22px 16px;
   text-align: center;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid #e8edf2;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--text);
 }
 
 .stack-item:hover {
   transform: translateY(-4px);
-  border-color: rgba(108,99,255,0.3);
-  background: var(--surface2);
+  border-color: var(--blue2);
+  background: var(--blue-bg);
 }
 
-.stack-item .icon {
-  font-size: 28px;
-  margin-bottom: 8px;
-  display: block;
-}
-
-/* --- Links --- */
-.links {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
-
-.link-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  border-radius: 14px;
-  background: var(--surface2);
-  color: var(--text);
-  text-decoration: none;
-  font-weight: 500;
-  border: 1px solid rgba(255,255,255,0.06);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.link-btn:hover {
-  transform: translateY(-3px) scale(1.03);
-  background: var(--accent);
-  border-color: var(--accent);
-}
-
-.link-btn:active {
-  transform: translateY(-1px) scale(0.97);
-  transition: all 0.12s;
-}
+.stack-item .icon { font-size: 26px; display: block; margin-bottom: 8px; }
 
 /* --- Stats --- */
 .stats-row {
   display: flex;
   gap: 24px;
   flex-wrap: wrap;
-  margin-top: 32px;
 }
 
 .stat {
   flex: 1;
-  min-width: 120px;
-  background: var(--surface);
-  border-radius: 16px;
-  padding: 24px;
+  min-width: 140px;
+  background: var(--white);
+  border-radius: 20px;
+  padding: 28px;
   text-align: center;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid #e8edf2;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.stat:hover { transform: translateY(-4px); border-color: var(--blue2); }
+
 .stat .num {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--blue1);
 }
 
 .stat .label {
@@ -350,54 +320,93 @@ section {
   margin-top: 4px;
 }
 
+/* --- Links --- */
+.links { display: flex; gap: 16px; flex-wrap: wrap; }
+
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 14px;
+  background: var(--blue1);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(26, 115, 232, 0.2);
+}
+
+.link-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(26, 115, 232, 0.3);
+}
+
+.link-btn:active {
+  transform: translateY(-1px) scale(0.97);
+  transition: all 0.1s;
+}
+
+.link-btn.secondary {
+  background: var(--white);
+  color: var(--blue1);
+  border: 2px solid var(--blue1);
+  box-shadow: none;
+}
+
+.link-btn.secondary:hover {
+  background: var(--blue-light);
+  box-shadow: 0 10px 30px rgba(26, 115, 232, 0.1);
+}
+
 /* --- Footer --- */
 footer {
   text-align: center;
   padding: 60px 24px;
   color: var(--text2);
   font-size: 13px;
+  background: var(--white);
+  border-top: 1px solid #e8edf2;
 }
 
-/* --- Scroll animations --- */
+/* --- Scroll reveal --- */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Staggered children */
 .reveal-children > * {
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .reveal-children.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: none; }
-.reveal-children.visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: none; }
-.reveal-children.visible > *:nth-child(3) { transition-delay: 0.2s; opacity: 1; transform: none; }
-.reveal-children.visible > *:nth-child(4) { transition-delay: 0.3s; opacity: 1; transform: none; }
-.reveal-children.visible > *:nth-child(5) { transition-delay: 0.4s; opacity: 1; transform: none; }
-.reveal-children.visible > *:nth-child(6) { transition-delay: 0.5s; opacity: 1; transform: none; }
+.reveal-children.visible > *:nth-child(2) { transition-delay: 0.08s; opacity: 1; transform: none; }
+.reveal-children.visible > *:nth-child(3) { transition-delay: 0.16s; opacity: 1; transform: none; }
+.reveal-children.visible > *:nth-child(4) { transition-delay: 0.24s; opacity: 1; transform: none; }
+.reveal-children.visible > *:nth-child(5) { transition-delay: 0.32s; opacity: 1; transform: none; }
+.reveal-children.visible > *:nth-child(6) { transition-delay: 0.40s; opacity: 1; transform: none; }
+.reveal-children.visible > *:nth-child(n+7) { transition-delay: 0.48s; opacity: 1; transform: none; }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .hero { flex-direction: column; }
+  .hero-left { padding: 60px 24px; }
+  .hero-right { width: 100vw; height: 40vh; position: relative; right: 0; top: 0; }
   .projects-grid { grid-template-columns: 1fr; }
   .stats-row { flex-direction: column; }
-  section { padding: 60px 16px; }
+  section { padding: 60px 20px; }
 }
 </style>
 </head>
 <body>
 
-<!-- Hero -->
 <div class="hero">
-  <div class="hero-content">
-    <h1>RSnew</h1>
-    <p class="subtitle">Builder / Tinkerer / Language Designer</p>
+  <div class="hero-left">
+    <div class="hero-label">:: RSnew</div>
+    <h1>构建者<br>探索者<br>语言设计师</h1>
+    <p class="subtitle">用代码构建未来</p>
     <div class="tags">
       <span class="tag">C++</span>
       <span class="tag">Rust</span>
@@ -407,34 +416,37 @@ footer {
       <span class="tag">Vue</span>
     </div>
   </div>
+  <div class="hero-right">
+    <div class="circle-main"></div>
+    <div class="circle-small"></div>
+    <div class="circle-outline"></div>
+  </div>
   <div class="scroll-hint"><span></span></div>
 </div>
 
-<!-- Projects -->
 <section>
-  <h2 class="section-title reveal"><span class="dot"></span>Projects</h2>
+  <h2 class="section-title reveal"><span class="bar"></span>项目</h2>
   <div class="projects-grid reveal-children">
     <a href="https://github.com/RSnew/Flux" class="project-card" target="_blank">
-      <span class="lang lang-cpp">C++</span>
+      <span class="lang">C++</span>
       <h3>Flux</h3>
-      <p>A programming language with hot-reload, AI-native types, design-by-contract, and crash recovery. LLVM JIT.</p>
+      <p>自研编程语言，支持热重载、AI 原生类型、契约式设计和崩溃恢复。内置 LLVM JIT。</p>
     </a>
     <a href="https://github.com/RSnew/xiaoerGame" class="project-card" target="_blank">
-      <span class="lang lang-rust">Rust</span>
+      <span class="lang">Rust</span>
       <h3>xiaoerGame</h3>
-      <p>Game project built with Rust.</p>
+      <p>Rust 构建的游戏项目。</p>
     </a>
     <a href="https://github.com/RSnew/ImNotThinkingWhatIWant" class="project-card" target="_blank">
-      <span class="lang lang-swift">Swift</span>
+      <span class="lang">Swift</span>
       <h3>ImNotThinkingWhatIWant</h3>
-      <p>iOS app built with Swift and SwiftUI.</p>
+      <p>Swift + SwiftUI 开发的 iOS 应用。</p>
     </a>
   </div>
 </section>
 
-<!-- Tech Stack -->
 <section>
-  <h2 class="section-title reveal"><span class="dot"></span>Stack</h2>
+  <h2 class="section-title reveal"><span class="bar"></span>技术栈</h2>
   <div class="stack-grid reveal-children">
     <div class="stack-item"><span class="icon">⚡</span>C++</div>
     <div class="stack-item"><span class="icon">🦀</span>Rust</div>
@@ -444,90 +456,52 @@ footer {
     <div class="stack-item"><span class="icon">🎯</span>Flutter</div>
     <div class="stack-item"><span class="icon">🔮</span>LLVM</div>
     <div class="stack-item"><span class="icon">🐳</span>Docker</div>
-    <div class="stack-item"><span class="icon">🤖</span>NoneBot</div>
     <div class="stack-item"><span class="icon">🌐</span>Go</div>
     <div class="stack-item"><span class="icon">☕</span>Java</div>
     <div class="stack-item"><span class="icon">📱</span>SwiftUI</div>
+    <div class="stack-item"><span class="icon">🤖</span>NoneBot</div>
   </div>
 </section>
 
-<!-- Stats -->
 <section>
-  <h2 class="section-title reveal"><span class="dot"></span>Stats</h2>
-  <div class="stats-row reveal-children" id="stats">
-    <div class="stat"><div class="num" id="stat-repos">-</div><div class="label">Repos</div></div>
-    <div class="stat"><div class="num" id="stat-commits">-</div><div class="label">Commits</div></div>
-    <div class="stat"><div class="num" id="stat-prs">-</div><div class="label">PRs</div></div>
-    <div class="stat"><div class="num" id="stat-contrib">-</div><div class="label">Contributions</div></div>
+  <h2 class="section-title reveal"><span class="bar"></span>数据</h2>
+  <div class="stats-row reveal-children">
+    <div class="stat"><div class="num" id="stat-repos">-</div><div class="label">仓库</div></div>
+    <div class="stat"><div class="num" id="stat-commits">-</div><div class="label">提交</div></div>
+    <div class="stat"><div class="num" id="stat-prs">-</div><div class="label">PR</div></div>
+    <div class="stat"><div class="num" id="stat-contrib">-</div><div class="label">贡献</div></div>
   </div>
 </section>
 
-<!-- Links -->
 <section>
-  <h2 class="section-title reveal"><span class="dot"></span>Links</h2>
+  <h2 class="section-title reveal"><span class="bar"></span>链接</h2>
   <div class="links reveal">
     <a href="https://github.com/RSnew" class="link-btn" target="_blank">GitHub</a>
-    <a href="https://space.bilibili.com/305722580/" class="link-btn" target="_blank">Bilibili</a>
+    <a href="https://space.bilibili.com/305722580/" class="link-btn secondary" target="_blank">Bilibili</a>
   </div>
 </section>
 
-<footer>
-  <p>Built with nothing but HTML, CSS & JS.</p>
-</footer>
+<footer>纯手工打造 · 零依赖 · 极致性能</footer>
 
 <script>
-// --- Intersection Observer for scroll animations ---
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal, .reveal-children').forEach(el => obs.observe(el));
 
-document.querySelectorAll('.reveal, .reveal-children').forEach(el => observer.observe(el));
+fetch('https://api.github.com/users/RSnew').then(r=>r.json()).then(d=>animNum('stat-repos',d.public_repos));
+animNum('stat-commits',89); animNum('stat-prs',49); animNum('stat-contrib',142);
 
-// --- Fetch GitHub stats ---
-fetch('https://api.github.com/users/RSnew')
-  .then(r => r.json())
-  .then(d => {
-    animateNumber('stat-repos', d.public_repos);
-  });
-
-// Hardcoded from GraphQL (can't call from browser without token)
-animateNumber('stat-commits', 89);
-animateNumber('stat-prs', 49);
-animateNumber('stat-contrib', 142);
-
-function animateNumber(id, target) {
-  const el = document.getElementById(id);
-  let current = 0;
-  const step = Math.max(1, Math.floor(target / 40));
-  const interval = setInterval(() => {
-    current += step;
-    if (current >= target) { current = target; clearInterval(interval); }
-    el.textContent = current;
-  }, 30);
+function animNum(id,target){
+  const el=document.getElementById(id);let cur=0;
+  const step=Math.max(1,Math.floor(target/35));
+  const iv=setInterval(()=>{cur+=step;if(cur>=target){cur=target;clearInterval(iv);}el.textContent=cur;},25);
 }
 
-// --- Spring physics for tags on hover ---
-document.querySelectorAll('.tag').forEach(tag => {
-  tag.addEventListener('mouseenter', () => {
-    tag.style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
-  });
-  tag.addEventListener('mouseleave', () => {
-    tag.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-  });
-});
-
-// --- Parallax on hero ---
-window.addEventListener('scroll', () => {
-  const hero = document.querySelector('.hero-content');
-  const scroll = window.scrollY;
-  if (scroll < window.innerHeight) {
-    hero.style.transform = `translateY(${scroll * 0.3}px)`;
-    hero.style.opacity = 1 - scroll / (window.innerHeight * 0.8);
-  }
+window.addEventListener('scroll',()=>{
+  const h=document.querySelector('.hero-left');
+  const s=window.scrollY;
+  if(s<window.innerHeight){h.style.transform=`translateY(${s*0.25}px)`;h.style.opacity=1-s/(window.innerHeight*0.7);}
 });
 </script>
 </body>
