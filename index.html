@@ -100,6 +100,15 @@ a.card{text-decoration:none;color:inherit;display:block;cursor:pointer}
 
 /* Footer */
 footer{text-align:center;padding:40px;color:var(--t2);font-size:12px;border-top:1px solid #e8edf2;margin-top:40px}
+
+/* Refresh button */
+.refresh-bar{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.refresh-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:20px;border:1px solid #e0e5ec;background:var(--w);color:var(--t);font-size:13px;font-weight:600;cursor:pointer;transition:all .3s}
+.refresh-btn:hover{background:var(--b1);color:#fff;border-color:var(--b1);transform:translateY(-2px);box-shadow:0 4px 12px rgba(26,115,232,.2)}
+.refresh-btn:active{transform:translateY(0)}
+.refresh-btn.loading .refresh-icon{animation:spin 1s linear infinite}
+.refresh-hint{font-size:11px;color:var(--t2)}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -117,6 +126,14 @@ footer{text-align:center;padding:40px;color:var(--t2);font-size:12px;border-top:
 </div>
 
 <div class="container">
+
+<!-- Refresh -->
+<div class="refresh-bar" style="justify-content:flex-end;padding-top:16px">
+  <span class="refresh-hint" id="data-time">数据加载中...</span>
+  <button class="refresh-btn" id="refresh-btn" onclick="refreshAll()">
+    <span class="refresh-icon" style="display:inline-block">&#x21bb;</span> 刷新数据
+  </button>
+</div>
 
 <!-- Dashboard -->
 <section id="dash">
@@ -221,59 +238,104 @@ window.addEventListener('scroll',()=>{
   else{island.classList.remove('show','bar','expanded');}
 });
 
-// Machine status
-async function loadStatus(){
-  try{
-    const r=await fetch('./status.json?t='+Date.now());
-    const d=await r.json();
-    document.getElementById('m-uptime').textContent=d.uptime||'-';
-    document.getElementById('m-cpu').textContent=(d.cpu_pct||'-')+'%';
-    document.getElementById('m-mem').textContent=(d.memory_gb||'-')+'GB';
-    document.getElementById('m-disk').textContent=d.disk_free||'-';
-    document.getElementById('m-updated').textContent='更新于 '+d.updated;
-    const sl=document.getElementById('svc-list');
-    sl.innerHTML='';
-    for(const[k,v]of Object.entries(d.services||{})){
-      sl.innerHTML+=`<span class="svc ${v==='online'?'on':'off'}">${v==='online'?'●':'○'} ${k}</span>`;
-    }
-    // Dashboard card status dots
-    const map={'PromptCraft':'svc-promptcraft','QQ Bot':'svc-qqbot','Danmaku':'svc-danmaku'};
-    for(const[k,id]of Object.entries(map)){
-      const el=document.getElementById(id);
-      if(el)el.className='status '+(d.services[k]==='online'?'on':'off');
-    }
-  }catch(e){document.getElementById('m-uptime').textContent='离线';}
-}
-loadStatus();setInterval(loadStatus,30000);
+// Color map for languages
+const langColors={'C++':'#659ad2','Rust':'#dea584','Swift':'#f05230','Python':'#3572a5','Java':'#b07219','HTML':'#e34c26','Vue':'#42b883'};
 
-// GitHub activity
-fetch('https://api.github.com/users/RSnew/events?per_page=10')
-  .then(r=>r.json()).then(events=>{
-    const feed=document.getElementById('feed');
-    feed.innerHTML='';
-    events.filter(e=>['PushEvent','PullRequestEvent','CreateEvent'].includes(e.type)).slice(0,8).forEach(e=>{
-      const repo=e.repo.name.split('/')[1];
-      const date=e.created_at.split('T')[0];
+// Render functions
+function renderStatus(d){
+  document.getElementById('m-uptime').textContent=d.uptime||'-';
+  document.getElementById('m-cpu').textContent=(d.cpu_pct||'-')+'%';
+  document.getElementById('m-mem').textContent=(d.memory_gb||'-')+'GB';
+  document.getElementById('m-disk').textContent=d.disk_free||'-';
+  document.getElementById('m-updated').textContent='更新于 '+d.updated;
+  const sl=document.getElementById('svc-list');
+  sl.innerHTML='';
+  for(const[k,v]of Object.entries(d.services||{})){
+    sl.innerHTML+=`<span class="svc ${v==='online'?'on':'off'}">${v==='online'?'●':'○'} ${k}</span>`;
+  }
+  const map={'PromptCraft':'svc-promptcraft','QQ Bot':'svc-qqbot','Danmaku':'svc-danmaku'};
+  for(const[k,id]of Object.entries(map)){
+    const el=document.getElementById(id);
+    if(el)el.className='status '+(d.services[k]==='online'?'on':'off');
+  }
+}
+
+function renderActivity(events){
+  const feed=document.getElementById('feed');
+  feed.innerHTML='';
+  events.forEach(e=>{
+    const repo=e.repo.split('/')[1];
+    feed.innerHTML+=`<div class="feed-item"><div class="feed-dot"></div><div><a href="https://github.com/${e.repo}" target="_blank" style="color:var(--b1);text-decoration:none;font-weight:600">${repo}</a> ${e.detail}<div class="feed-date">${e.date}</div></div></div>`;
+  });
+  if(!feed.innerHTML)feed.innerHTML='<div style="color:var(--t2);font-size:13px">暂无动态</div>';
+}
+
+function renderRepos(repos){
+  const el=document.getElementById('proj-list');
+  el.innerHTML='';
+  repos.forEach(r=>{
+    const c=langColors[r.language]||'#999';
+    el.innerHTML+=`<div class="mini-proj"><span class="lang-dot" style="background:${c}"></span><a href="${r.url}" target="_blank">${r.name}</a><span style="color:var(--t2);font-size:12px;margin-left:auto">${r.language||''}</span></div>`;
+  });
+}
+
+// Load static data on page load
+async function loadStatic(){
+  try{
+    const[statusRes,dataRes]=await Promise.all([
+      fetch('./status.json?t='+Date.now()),
+      fetch('./data.json?t='+Date.now())
+    ]);
+    const status=await statusRes.json();
+    const data=await dataRes.json();
+    renderStatus(status);
+    renderActivity(data.activity||[]);
+    renderRepos(data.repos||[]);
+    document.getElementById('data-time').textContent='静态数据 · 更新于 '+(data.updated||'未知');
+  }catch(e){
+    document.getElementById('data-time').textContent='静态数据加载失败';
+    document.getElementById('m-uptime').textContent='离线';
+  }
+}
+loadStatic();
+
+// Refresh: fetch live data from GitHub API
+async function refreshAll(){
+  const btn=document.getElementById('refresh-btn');
+  btn.classList.add('loading');
+  btn.disabled=true;
+  document.getElementById('data-time').textContent='正在从 GitHub 获取最新数据...';
+  try{
+    const[eventsRes,reposRes,statusRes]=await Promise.all([
+      fetch('https://api.github.com/users/RSnew/events?per_page=10'),
+      fetch('https://api.github.com/users/RSnew/repos?sort=updated&per_page=8'),
+      fetch('./status.json?t='+Date.now())
+    ]);
+    // Activity
+    const rawEvents=await eventsRes.json();
+    const events=rawEvents.filter(e=>['PushEvent','PullRequestEvent','CreateEvent'].includes(e.type)).slice(0,8).map(e=>{
       let detail='';
       if(e.type==='PushEvent')detail=`推送了 ${e.payload.commits?.length||0} 个提交`;
       else if(e.type==='PullRequestEvent')detail=`${e.payload.action} PR #${e.payload.pull_request?.number}`;
       else if(e.type==='CreateEvent')detail=`创建了 ${e.payload.ref_type} ${e.payload.ref||''}`;
-      feed.innerHTML+=`<div class="feed-item"><div class="feed-dot"></div><div><a href="https://github.com/${e.repo.name}" target="_blank" style="color:var(--b1);text-decoration:none;font-weight:600">${repo}</a> ${detail}<div class="feed-date">${date}</div></div></div>`;
+      return{type:e.type,repo:e.repo.name,date:e.created_at.split('T')[0],detail};
     });
-    if(!feed.innerHTML)feed.innerHTML='<div style="color:var(--t2);font-size:13px">暂无动态</div>';
-  }).catch(()=>{document.getElementById('feed').innerHTML='<div style="color:var(--t2)">加载失败</div>';});
-
-// Projects list
-fetch('https://api.github.com/users/RSnew/repos?sort=updated&per_page=8')
-  .then(r=>r.json()).then(repos=>{
-    const el=document.getElementById('proj-list');
-    el.innerHTML='';
-    const colors={'C++':'#659ad2','Rust':'#dea584','Swift':'#f05230','Python':'#3572a5','Java':'#b07219','HTML':'#e34c26','Vue':'#42b883'};
-    repos.forEach(r=>{
-      const c=colors[r.language]||'#999';
-      el.innerHTML+=`<div class="mini-proj"><span class="lang-dot" style="background:${c}"></span><a href="${r.html_url}" target="_blank">${r.name}</a><span style="color:var(--t2);font-size:12px;margin-left:auto">${r.language||''}</span></div>`;
-    });
-  });
+    renderActivity(events);
+    // Repos
+    const rawRepos=await reposRes.json();
+    renderRepos(rawRepos.map(r=>({name:r.name,url:r.html_url,language:r.language})));
+    // Status
+    try{renderStatus(await statusRes.json());}catch(e){}
+    const now=new Date().toLocaleString('zh-CN',{timeZone:'Asia/Shanghai'});
+    document.getElementById('data-time').textContent='实时数据 · 刷新于 '+now;
+  }catch(e){
+    document.getElementById('data-time').textContent='刷新失败，显示缓存数据';
+    loadStatic();
+  }finally{
+    btn.classList.remove('loading');
+    btn.disabled=false;
+  }
+}
 
 // Tech tags
 const techs=['C++','Rust','Swift','Python','Vue','Flutter','LLVM','Docker','Go','Java','SwiftUI','NoneBot'];
