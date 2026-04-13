@@ -224,7 +224,7 @@ window.addEventListener('scroll',()=>{
 // Machine status
 async function loadStatus(){
   try{
-    const r=await fetch('http://localhost:9878/api/status');
+    const r=await fetch('./status.json?t='+Date.now());
     const d=await r.json();
     document.getElementById('m-uptime').textContent=d.uptime||'-';
     document.getElementById('m-cpu').textContent=(d.cpu_pct||'-')+'%';
@@ -290,15 +290,29 @@ techs.forEach(t=>{
 // Wiki
 const wikiData={
   xiaoerGame:[
-    {title:'游戏概述',desc:'xiaoerGame 是一个 Rust 构建的游戏项目'},
-    {title:'技术架构',desc:'使用 Rust + QQ 平台'},
-    {title:'角色系统',desc:'游戏角色与交互机制'},
+    {title:'游戏概述',desc:'xiaoerGame — Rust 构建的 QQ 群互动游戏'},
+    {title:'小二对决系统',desc:'RPG 对战玩法，玩家念咒语由 AI 判定效果，支持攻击/变化/治疗/束缚'},
+    {title:'六维属性',desc:'体力(HP)、灵智(魔攻/魔防)、想象(精攻/精防)、灵魂(护盾/HP/速度)、创造(精攻/护盾)、灵活(速度/闪避)'},
+    {title:'加点系统',desc:'1星尘=1点属性，单项最多+100，总共最多+250。基础值：体力100/灵智30/想象30/灵魂30/创造30/灵活50'},
+    {title:'战斗规则',desc:'速度决定先手，轮流出招，咒语威力0-30由AI判定，总伤害=威力+六维×0.4'},
+    {title:'犯规系统',desc:'秒杀/数值膨胀/连续攻击/无敌/掀桌子 → 跳过犯规方回合'},
+    {title:'场地效果',desc:'变化技能持续4回合，可封印对手变化能力，最多同时5个效果'},
+    {title:'束缚系统',desc:'束缚目标有15HP，被束缚者只能攻击束缚物挣脱，4回合自动消失'},
+    {title:'星尘系统',desc:'聊天获得15-30✦/次（日上限100），抽奖重复获得星尘，摇骰子赢+35/输+25，对决双方+200'},
+    {title:'抽奖系统',desc:'每日一次，SSR 3%/SR 12%/R 35%/N 50%，可收藏小动物'},
+    {title:'性格修改卡',desc:'1500✦购买，可自定义小二对你的性格表现，AI预审+二次确认'},
+    {title:'好感度',desc:'隐藏属性-100~100，友好行为+1/不友好-1，每日最多变化5次，影响小二回复风格'},
   ],
   taiko:[
-    {title:'太鼓达人 Mac 版',desc:'TaikoMacOS — Swift + SpriteKit 重写的太鼓达人'},
-    {title:'谱面格式',desc:'TJA / Fumen 谱面解析'},
-    {title:'音频系统',desc:'NUS3BANK 音频格式解析与播放'},
-    {title:'YIN 算法',desc:'音高检测算法实现'},
+    {title:'太鼓达人 Mac 版',desc:'TaikoMacOS — Swift + SpriteKit 从零重写的太鼓达人虹色版'},
+    {title:'数据解密',desc:'AES-256-CBC 解密街机数据，支持 datatable/musicinfo.bin 和 fumen 谱面'},
+    {title:'谱面解析',desc:'FumenParser 解析 .bin 谱面格式，支持分支谱面(普通/达人/超人)'},
+    {title:'音频系统',desc:'NUS3BANK 音频容器解析 + vgmstream-cli 格式转换 + AVAudioEngine 播放'},
+    {title:'纹理系统',desc:'NUTexB 格式解析（BC7压缩），通过 Metal 渲染到 SpriteKit'},
+    {title:'判定窗口',desc:'Good ±25ms / OK ±75ms / Bad ±108ms，连击和魂槽系统'},
+    {title:'Lumen UI',desc:'街机 UI 场景格式解析与渲染'},
+    {title:'YIN 音高检测',desc:'实时基频检测算法，用于 VoiceTrainer 嗓音训练'},
+    {title:'PeepoDrumKit',desc:'太鼓谱面编辑器，支持 TJA 格式导入导出'},
   ],
 };
 let currentGame='xiaoerGame';
