@@ -1,17 +1,95 @@
 {
-  "activity": [
-    {"type": "PushEvent", "repo": "RSnew/RSnew.github.io", "date": "2026-04-13", "detail": "推送了 0 个提交"},
-    {"type": "PushEvent", "repo": "RSnew/RSnew", "date": "2026-04-13", "detail": "推送了 0 个提交"}
-  ],
-  "repos": [
-    {"name": "RSnew.github.io", "url": "https://github.com/RSnew/RSnew.github.io", "language": "HTML"},
-    {"name": "RSnew", "url": "https://github.com/RSnew/RSnew", "language": null},
-    {"name": "xiaoerGame", "url": "https://github.com/RSnew/xiaoerGame", "language": "Rust"},
-    {"name": "flight_act", "url": "https://github.com/RSnew/flight_act", "language": "Python"},
-    {"name": "Flux", "url": "https://github.com/RSnew/Flux", "language": "C++"},
-    {"name": "ImNotThinkingWhatIWant", "url": "https://github.com/RSnew/ImNotThinkingWhatIWant", "language": "Swift"},
-    {"name": "workstation305", "url": "https://github.com/RSnew/workstation305", "language": null},
-    {"name": "NetworkProgram", "url": "https://github.com/RSnew/NetworkProgram", "language": "Java"}
-  ],
-  "updated": "2026-04-13 14:45 UTC"
+    "activity": [
+        {
+            "date": "2026-04-13",
+            "detail": "\u63a8\u9001\u4e86 0 \u4e2a\u63d0\u4ea4",
+            "repo": "RSnew/RSnew",
+            "type": "PushEvent"
+        },
+        {
+            "date": "2026-04-13",
+            "detail": "\u63a8\u9001\u4e86 0 \u4e2a\u63d0\u4ea4",
+            "repo": "RSnew/RSnew.github.io",
+            "type": "PushEvent"
+        },
+        {
+            "date": "2026-04-13",
+            "detail": "\u63a8\u9001\u4e86 0 \u4e2a\u63d0\u4ea4",
+            "repo": "RSnew/RSnew.github.io",
+            "type": "PushEvent"
+        },
+        {
+            "date": "2026-04-13",
+            "detail": "\u63a8\u9001\u4e86 0 \u4e2a\u63d0\u4ea4",
+            "repo": "RSnew/RSnew.github.io",
+            "type": "PushEvent"
+        },
+        {
+            "date": "2026-04-13",
+            "detail": "\u63a8\u9001\u4e86 0 \u4e2a\u63d0\u4ea4",
+            "repo": "RSnew/RSnew.github.io",
+            "type": "PushEvent"
+        },
+        {
+            "date": "2026-04-13",
+            "detail": "\u63a8\u9001\u4e86 0 \u4e2a\u63d0\u4ea4",
+            "repo": "RSnew/RSnew",
+            "type": "PushEvent"
+        },
+        {
+            "date": "2026-04-13",
+            "detail": "\u63a8\u9001\u4e86 0 \u4e2a\u63d0\u4ea4",
+            "repo": "RSnew/RSnew.github.io",
+            "type": "PushEvent"
+        },
+        {
+            "date": "2026-04-13",
+            "detail": "\u63a8\u9001\u4e86 0 \u4e2a\u63d0\u4ea4",
+            "repo": "RSnew/RSnew.github.io",
+            "type": "PushEvent"
+        }
+    ],
+    "repos": [
+        {
+            "language": null,
+            "name": "RSnew",
+            "url": "https://github.com/RSnew/RSnew"
+        },
+        {
+            "language": "HTML",
+            "name": "RSnew.github.io",
+            "url": "https://github.com/RSnew/RSnew.github.io"
+        },
+        {
+            "language": "Rust",
+            "name": "xiaoerGame",
+            "url": "https://github.com/RSnew/xiaoerGame"
+        },
+        {
+            "language": "Python",
+            "name": "flight_act",
+            "url": "https://github.com/RSnew/flight_act"
+        },
+        {
+            "language": "C++",
+            "name": "Flux",
+            "url": "https://github.com/RSnew/Flux"
+        },
+        {
+            "language": "Swift",
+            "name": "ImNotThinkingWhatIWant",
+            "url": "https://github.com/RSnew/ImNotThinkingWhatIWant"
+        },
+        {
+            "language": null,
+            "name": "workstation305",
+            "url": "https://github.com/RSnew/workstation305"
+        },
+        {
+            "language": "Java",
+            "name": "NetworkProgram",
+            "url": "https://github.com/RSnew/NetworkProgram"
+        }
+    ],
+    "updated": "2026-04-14 00:28 UTC"
 }
