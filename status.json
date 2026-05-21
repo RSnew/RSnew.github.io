@@ -3,7 +3,7 @@
   "load": "",
   "memory_gb": ,
   "disk_free": "12Gi",
-  "cpu_pct": "249",
+  "cpu_pct": "281",
   "services": {
     "QQ Bot": "offline",
     "NapCat": "online",
@@ -11,5 +11,5 @@
     "Danmaku": "offline",
     "PromptCraft": "offline"
   },
-  "updated": "2026-05-21 07:56 UTC"
+  "updated": "2026-05-21 08:00 UTC"
 }
