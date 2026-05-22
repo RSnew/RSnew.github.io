@@ -82,6 +82,18 @@ section{padding:56px 0}
 .proj-card.featured .proj-extra ul{padding-left:14px;margin-top:4px}
 .proj-card.featured .proj-extra li{margin-bottom:3px}
 
+/* Timeline */
+.timeline-wrap{position:relative;padding-left:24px}
+.timeline-wrap::before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:linear-gradient(to bottom,var(--b1),var(--b4));border-radius:2px;opacity:.25}
+.tl-item{position:relative;padding:0 0 36px 28px}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{position:absolute;left:-17px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--w);border:2px solid var(--b2);transition:all .3s}
+.tl-dot.accent{background:var(--b1);border-color:var(--b1);box-shadow:0 0 0 3px rgba(26,115,232,.15)}
+.tl-item:hover .tl-dot{transform:scale(1.25)}
+.tl-year{font-size:11px;font-weight:700;color:var(--b1);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.tl-title{font-size:1rem;font-weight:700;color:var(--dk);margin-bottom:6px}
+.tl-desc{font-size:13px;color:var(--t2);line-height:1.65}
+
 /* About / Skills */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 @media(max-width:720px){.about-grid{grid-template-columns:1fr}}
@@ -123,7 +135,7 @@ footer a{color:var(--b1);text-decoration:none}
 <div id="progress"></div>
 <nav class="island" id="island">
   <span class="dot"></span><span>RSnew</span>
-  <a href="#projects">作品</a><a href="#about">关于</a><a href="#activity">动态</a>
+  <a href="#projects">作品</a><a href="#timeline">经历</a><a href="#about">关于</a><a href="#activity">动态</a>
 </nav>
 
 <!-- Hero -->
@@ -243,6 +255,50 @@ footer a{color:var(--b1);text-decoration:none}
         <a href="https://github.com/RSnew/xiaoerGame" target="_blank">查看 →</a>
       </div>
     </a>
+
+  </div>
+</section>
+
+<!-- Timeline -->
+<section id="timeline">
+  <h2 class="stitle rv"><span class="bar"></span>经历</h2>
+  <div class="timeline-wrap rv">
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-year">大一</div>
+        <div class="tl-title">敲下第一行代码</div>
+        <div class="tl-desc">从 C 语言开始，指针、内存、段错误——从此上瘾。</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-year">大学期间</div>
+        <div class="tl-title">语言探索期</div>
+        <div class="tl-desc">从 C 到 C++、Python、Rust、Swift，逐渐形成"能用系统语言解决的就不用高层"的习惯。开始做游戏、写工具、折腾 Linux。</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot accent"></div>
+      <div class="tl-content">
+        <div class="tl-year">2025 下半年</div>
+        <div class="tl-title">抓住 AI 风口，技术突飞猛进</div>
+        <div class="tl-desc">大量接触 LLM、Prompt 工程、AI 应用开发，把 AI 能力整合进游戏、Bot、分析工具。这半年的成长顶过去两年。</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot accent"></div>
+      <div class="tl-content">
+        <div class="tl-year">2025 → 现在</div>
+        <div class="tl-title">入职工作，仍在折腾</div>
+        <div class="tl-desc">工作不满一年。白天上班，晚上写 Flux、做游戏、维护 Bot。没有停下来的打算。</div>
+      </div>
+    </div>
 
   </div>
 </section>
