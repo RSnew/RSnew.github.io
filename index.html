@@ -3,114 +3,118 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RSnew — 主页</title>
+<title>RSnew</title>
 <style>
-:root{--bg:#f4f7fa;--w:#fff;--b1:#1a73e8;--b2:#4a9ff5;--b3:#7ec8f8;--b4:#00bcd4;--bl:#e8f4fd;--dk:#1a2332;--t:#2c3e50;--t2:#6b7c93;--r:18px}
+:root{--bg:#f4f7fa;--w:#fff;--b1:#1a73e8;--b2:#4a9ff5;--b4:#00bcd4;--dk:#1a2332;--t:#2c3e50;--t2:#6b7c93;--r:20px}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{background:var(--bg);color:var(--t);font-family:-apple-system,"SF Pro Display","PingFang SC",system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
 
-/* Progress */
+/* Progress bar */
 #progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--b1),var(--b4));z-index:200;width:0;transition:width .15s;border-radius:0 2px 2px 0}
 
-/* Island */
+/* Island nav */
 .island{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:100;background:var(--dk);color:#fff;border-radius:30px;padding:0 12px;height:8px;display:flex;align-items:center;gap:0;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:all .6s cubic-bezier(.34,1.56,.64,1);box-shadow:0 4px 20px rgba(0,0,0,.15);min-width:60px;width:60px;overflow:hidden;white-space:nowrap}
 .island.show{opacity:1}
-.island.bar{height:8px;width:120px;padding:0;border-radius:4px;gap:0}
+.island.bar{height:8px;width:120px;padding:0;border-radius:4px}
 .island.bar *{opacity:0;transition:opacity .2s}
-.island.expanded{height:48px;width:auto;min-width:300px;padding:0 28px;border-radius:26px;gap:18px;pointer-events:auto}
+.island.expanded{height:48px;width:auto;min-width:260px;padding:0 28px;border-radius:26px;gap:18px;pointer-events:auto}
 .island.expanded *{opacity:1;transition:opacity .3s .15s}
 .island .dot{width:8px;height:8px;background:var(--b2);border-radius:50%;flex-shrink:0;animation:pulse 2s infinite}
 .island a{color:rgba(255,255,255,.7);text-decoration:none;transition:color .3s;font-size:13px}
 .island a:hover{color:#fff}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-/* Hero compact */
-.hero{padding:80px 0 40px;text-align:center;background:var(--w);position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(74,159,245,.12),transparent 70%);top:-100px;right:-50px;animation:drift 12s ease-in-out infinite}
-.hero::after{content:'';position:absolute;width:250px;height:250px;background:radial-gradient(circle,rgba(0,188,212,.08),transparent 70%);bottom:-50px;left:-30px;animation:drift 10s ease-in-out infinite reverse}
+/* Hero */
+.hero{padding:100px 0 60px;text-align:center;background:var(--w);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(74,159,245,.1),transparent 70%);top:-120px;right:-60px;animation:drift 14s ease-in-out infinite}
+.hero::after{content:'';position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(0,188,212,.07),transparent 70%);bottom:-60px;left:-40px;animation:drift 11s ease-in-out infinite reverse}
 @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-15px)}}
-.hero h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--dk);letter-spacing:-.03em;opacity:0;animation:springIn .8s cubic-bezier(.34,1.56,.64,1) .2s forwards}
-.hero .sub{color:var(--t2);font-size:1rem;margin-top:8px;opacity:0;animation:springIn .8s cubic-bezier(.34,1.56,.64,1) .4s forwards}
-@keyframes springIn{0%{opacity:0;transform:translateY(30px) scale(.95)}60%{transform:translateY(-4px) scale(1.01)}100%{opacity:1;transform:none}}
+.hero h1{font-size:clamp(2.4rem,5vw,3.6rem);font-weight:800;color:var(--dk);letter-spacing:-.04em;opacity:0;animation:springIn .9s cubic-bezier(.34,1.56,.64,1) .2s forwards}
+.hero .sub{color:var(--t2);font-size:1.05rem;margin-top:10px;opacity:0;animation:springIn .9s cubic-bezier(.34,1.56,.64,1) .4s forwards}
+.hero .links{margin-top:28px;display:flex;gap:12px;justify-content:center;opacity:0;animation:springIn .9s cubic-bezier(.34,1.56,.64,1) .6s forwards}
+.hero-link{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border-radius:24px;font-size:14px;font-weight:600;text-decoration:none;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.hero-link.primary{background:var(--dk);color:#fff}
+.hero-link.primary:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(26,35,50,.25)}
+.hero-link.secondary{background:#f0f2f5;color:var(--t)}
+.hero-link.secondary:hover{background:#e4e8ee;transform:translateY(-3px)}
+@keyframes springIn{0%{opacity:0;transform:translateY(28px) scale(.96)}60%{transform:translateY(-4px) scale(1.01)}100%{opacity:1;transform:none}}
 
 /* Layout */
-.container{max-width:1100px;margin:0 auto;padding:0 24px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
-@media(max-width:768px){.grid2{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}}
-
-/* Section */
-section{padding:48px 0}
-.stitle{font-size:1.4rem;font-weight:700;color:var(--dk);margin-bottom:24px;display:flex;align-items:center;gap:10px}
-.stitle .bar{width:32px;height:3px;background:var(--b1);border-radius:2px}
-
-/* Card base */
-.card{background:var(--w);border-radius:var(--r);padding:24px;border:1px solid #e8edf2;transition:all .5s cubic-bezier(.34,1.56,.64,1)}
-.card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(26,115,232,.1);border-color:var(--b2)}
-.card:active{transform:translateY(-3px) scale(.98);transition:all .12s}
-a.card{text-decoration:none;color:inherit;display:block;cursor:pointer}
-
-/* Dashboard cards */
-.dash-card{position:relative;overflow:hidden}
-.dash-card .icon{font-size:28px;margin-bottom:10px;display:block}
-.dash-card h3{font-size:1rem;color:var(--dk);margin-bottom:4px}
-.dash-card p{font-size:12px;color:var(--t2)}
-.dash-card .status{position:absolute;top:16px;right:16px;width:10px;height:10px;border-radius:50%}
-.status.on{background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,.4)}
-.status.off{background:#ef4444}
-
-/* Activity feed */
-.feed-item{padding:12px 0;border-bottom:1px solid #f0f2f5;font-size:13px;display:flex;gap:10px;align-items:flex-start}
-.feed-item:last-child{border:none}
-.feed-dot{width:8px;height:8px;border-radius:50%;background:var(--b1);margin-top:5px;flex-shrink:0}
-.feed-date{color:var(--t2);font-size:11px;margin-top:2px}
-
-/* Machine stats */
-.machine-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
-.m-stat{background:var(--w);border-radius:14px;padding:16px;text-align:center;border:1px solid #e8edf2}
-.m-stat .val{font-size:1.4rem;font-weight:800;color:var(--b1)}
-.m-stat .lbl{font-size:11px;color:var(--t2);margin-top:2px}
-
-/* Services */
-.svc-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-.svc{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px}
-.svc.on{background:#dcfce7;color:#166534}
-.svc.off{background:#fee2e2;color:#991b1b}
-
-/* Wiki */
-.wiki-search{display:flex;gap:10px;margin-bottom:16px}
-.wiki-search input{flex:1;padding:12px 16px;border-radius:12px;border:1px solid #e0e5ec;font-size:14px;outline:none;transition:border .3s}
-.wiki-search input:focus{border-color:var(--b1)}
-.wiki-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.wiki-tab{padding:6px 16px;border-radius:20px;border:1px solid #e0e5ec;font-size:13px;cursor:pointer;transition:all .3s;background:var(--w)}
-.wiki-tab.active,.wiki-tab:hover{background:var(--b1);color:#fff;border-color:var(--b1)}
-.wiki-result{padding:12px;border-bottom:1px solid #f0f2f5;font-size:13px}
-.wiki-group{margin-top:16px}
-.wiki-group:first-child{margin-top:0}
-.wiki-group-title{font-size:13px;font-weight:700;color:var(--b1);padding:8px 12px;background:var(--bl);border-radius:10px;margin-bottom:4px}
-
-/* Mini project */
-.mini-proj{display:flex;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #f0f2f5}
-.mini-proj:last-child{border:none}
-.mini-proj .lang-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.mini-proj a{color:var(--dk);font-weight:600;text-decoration:none;font-size:14px}
-.mini-proj a:hover{color:var(--b1)}
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+section{padding:56px 0}
+.stitle{font-size:1.5rem;font-weight:700;color:var(--dk);margin-bottom:32px;display:flex;align-items:center;gap:12px}
+.stitle .bar{width:36px;height:3px;background:linear-gradient(90deg,var(--b1),var(--b4));border-radius:2px}
 
 /* Scroll reveal */
-.rv{opacity:0;transform:translateY(24px);transition:all .7s cubic-bezier(.34,1.56,.64,1)}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.34,1.56,.64,1),transform .7s cubic-bezier(.34,1.56,.64,1)}
 .rv.v{opacity:1;transform:none}
 
-/* Footer */
-footer{text-align:center;padding:40px;color:var(--t2);font-size:12px;border-top:1px solid #e8edf2;margin-top:40px}
+/* Project cards (featured) */
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:720px){.proj-grid{grid-template-columns:1fr}}
+.proj-card{background:var(--w);border-radius:var(--r);border:1px solid #e8edf2;overflow:hidden;transition:all .5s cubic-bezier(.34,1.56,.64,1);text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.proj-card:hover{transform:translateY(-8px);box-shadow:0 20px 56px rgba(26,115,232,.12);border-color:var(--b2)}
+.proj-card:active{transform:translateY(-3px) scale(.99);transition:all .12s}
+.proj-accent{height:5px;width:100%}
+.proj-body{padding:24px;flex:1;display:flex;flex-direction:column;gap:10px}
+.proj-top{display:flex;align-items:center;gap:14px}
+.proj-icon{font-size:32px;line-height:1}
+.proj-name{font-size:1.15rem;font-weight:700;color:var(--dk)}
+.proj-status{font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px}
+.proj-status.active{background:#dcfce7;color:#15803d}
+.proj-status.wip{background:#fef9c3;color:#854d0e}
+.proj-status.paused{background:#f1f5f9;color:#64748b}
+.proj-desc{font-size:14px;color:var(--t2);line-height:1.65;flex:1}
+.proj-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.tag{font-size:11px;font-weight:600;padding:4px 10px;border-radius:10px;background:#f0f4f8;color:var(--t2)}
+.proj-foot{padding:14px 24px;border-top:1px solid #f0f2f5;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--t2)}
+.proj-foot a{color:var(--b1);text-decoration:none;font-weight:600;font-size:12px}
+.proj-foot a:hover{text-decoration:underline}
 
-/* Refresh button */
-.refresh-bar{display:flex;align-items:center;gap:10px;margin-bottom:16px}
-.refresh-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:20px;border:1px solid #e0e5ec;background:var(--w);color:var(--t);font-size:13px;font-weight:600;cursor:pointer;transition:all .3s}
-.refresh-btn:hover{background:var(--b1);color:#fff;border-color:var(--b1);transform:translateY(-2px);box-shadow:0 4px 12px rgba(26,115,232,.2)}
-.refresh-btn:active{transform:translateY(0)}
-.refresh-btn.loading .refresh-icon{animation:spin 1s linear infinite}
-.refresh-hint{font-size:11px;color:var(--t2)}
+/* Featured highlight card */
+.proj-card.featured{grid-column:1/-1}
+.proj-card.featured .proj-body{flex-direction:row;align-items:flex-start;gap:24px}
+@media(max-width:720px){.proj-card.featured .proj-body{flex-direction:column}}
+.proj-card.featured .proj-info{flex:1}
+.proj-card.featured .proj-extra{flex-shrink:0;background:#f8fafc;border-radius:14px;padding:16px 20px;font-size:13px;color:var(--t2);min-width:180px}
+.proj-card.featured .proj-extra strong{display:block;color:var(--dk);font-size:15px;margin-bottom:6px}
+.proj-card.featured .proj-extra ul{padding-left:14px;margin-top:4px}
+.proj-card.featured .proj-extra li{margin-bottom:3px}
+
+/* About / Skills */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:720px){.about-grid{grid-template-columns:1fr}}
+.about-card{background:var(--w);border-radius:var(--r);padding:28px;border:1px solid #e8edf2}
+.about-card h3{font-size:1rem;font-weight:700;color:var(--dk);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.skill-row{display:flex;flex-wrap:wrap;gap:8px}
+.skill{padding:6px 14px;border-radius:14px;font-size:12px;font-weight:600;background:#f0f4f8;color:var(--t);transition:all .3s}
+.skill:hover{background:var(--b1);color:#fff;transform:translateY(-2px)}
+.skill.primary{background:#e8f4fd;color:var(--b1)}
+.now-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.now-item{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.now-item .ei{font-size:20px;flex-shrink:0}
+
+/* Activity */
+.feed-card{background:var(--w);border-radius:var(--r);border:1px solid #e8edf2;overflow:hidden}
+.feed-item{padding:14px 20px;border-bottom:1px solid #f0f2f5;font-size:13px;display:flex;gap:12px;align-items:flex-start;transition:background .2s}
+.feed-item:hover{background:#fafbfc}
+.feed-item:last-child{border:none}
+.feed-dot{width:8px;height:8px;border-radius:50%;background:var(--b1);margin-top:5px;flex-shrink:0}
+.feed-meta{color:var(--t2);font-size:11px;margin-top:3px}
+.feed-repo{color:var(--b1);font-weight:600;text-decoration:none}
+.feed-repo:hover{text-decoration:underline}
+
+/* Footer */
+footer{text-align:center;padding:48px 24px;color:var(--t2);font-size:12px;border-top:1px solid #e8edf2;margin-top:20px}
+footer a{color:var(--b1);text-decoration:none}
+
+/* Activity refresh */
+.feed-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:0;padding:14px 20px;border-bottom:1px solid #f0f2f5}
+.feed-head-title{font-size:13px;color:var(--t2)}
+.refresh-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:16px;border:1px solid #e0e5ec;background:var(--w);color:var(--t);font-size:12px;font-weight:600;cursor:pointer;transition:all .3s}
+.refresh-btn:hover{background:var(--b1);color:#fff;border-color:var(--b1)}
+.refresh-btn.loading .ri{animation:spin 1s linear infinite;display:inline-block}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 </style>
 </head>
@@ -119,312 +123,275 @@ footer{text-align:center;padding:40px;color:var(--t2);font-size:12px;border-top:
 <div id="progress"></div>
 <nav class="island" id="island">
   <span class="dot"></span><span>RSnew</span>
-  <a href="#dash">仪表盘</a><a href="#activity">动态</a><a href="#wiki">Wiki</a><a href="#projects">项目</a>
+  <a href="#projects">作品</a><a href="#about">关于</a><a href="#activity">动态</a>
 </nav>
 
 <!-- Hero -->
 <div class="hero">
   <h1>RSnew</h1>
   <p class="sub">构建者 · 探索者 · 语言设计师</p>
+  <div class="links">
+    <a class="hero-link primary" href="https://github.com/RSnew" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+    <a class="hero-link secondary" href="mailto:m18748459674@gmail.com">✉ 联系我</a>
+  </div>
 </div>
 
 <div class="container">
 
-<!-- Refresh -->
-<div class="refresh-bar" style="justify-content:flex-end;padding-top:16px">
-  <span class="refresh-hint" id="data-time">数据加载中...</span>
-  <button class="refresh-btn" id="refresh-btn" onclick="refreshAll()">
-    <span class="refresh-icon" style="display:inline-block">&#x21bb;</span> 刷新数据
-  </button>
-</div>
+<!-- Projects -->
+<section id="projects">
+  <h2 class="stitle rv"><span class="bar"></span>作品</h2>
 
-<!-- Dashboard -->
-<section id="dash">
-  <h2 class="stitle rv"><span class="bar"></span>仪表盘</h2>
-  <div class="grid3 rv" id="dash-cards">
-    <a class="card dash-card" href="https://github.com/RSnew/Flux" target="_blank">
-      <span class="icon">🔥</span><h3>Flux 语言</h3><p>自研编程语言</p>
+  <div class="proj-grid">
+
+    <!-- Flux — featured -->
+    <a class="proj-card featured rv" href="https://github.com/RSnew/Flux" target="_blank">
+      <div class="proj-accent" style="background:linear-gradient(90deg,#f97316,#ef4444)"></div>
+      <div class="proj-body">
+        <div class="proj-info">
+          <div class="proj-top">
+            <span class="proj-icon">🔥</span>
+            <div>
+              <div class="proj-name">Flux 编程语言</div>
+              <span class="proj-status active">活跃开发</span>
+            </div>
+          </div>
+          <p class="proj-desc">自研编程语言，支持热重载、AI 原生类型与崩溃恢复。基于 C++ 与 LLVM JIT 构建，探索下一代语言设计的边界。</p>
+          <div class="proj-tags">
+            <span class="tag">C++</span><span class="tag">LLVM</span><span class="tag">JIT</span><span class="tag">编译器</span>
+          </div>
+        </div>
+        <div class="proj-extra">
+          <strong>核心特性</strong>
+          <ul>
+            <li>热重载</li>
+            <li>AI 原生类型</li>
+            <li>崩溃恢复</li>
+            <li>LLVM JIT</li>
+          </ul>
+        </div>
+      </div>
+      <div class="proj-foot">
+        <span>RSnew / Flux</span>
+        <a href="https://github.com/RSnew/Flux" target="_blank">查看 →</a>
+      </div>
     </a>
-    <div class="card dash-card" onclick="window.open('http://localhost:8088','_blank')">
-      <span class="status" id="svc-promptcraft"></span>
-      <span class="icon">🧪</span><h3>PromptCraft</h3><p>AI 编程挑战平台</p>
-    </div>
-    <div class="card dash-card" onclick="window.open('http://localhost:8095','_blank')">
-      <span class="status" id="svc-qqbot"></span>
-      <span class="icon">🤖</span><h3>QQ 机器人</h3><p>小二妹妹</p>
-    </div>
-    <div class="card dash-card" onclick="window.open('http://localhost:9877','_blank')">
-      <span class="status" id="svc-danmaku"></span>
-      <span class="icon">💬</span><h3>弹幕覆盖</h3><p>B站直播弹幕</p>
-    </div>
-    <a class="card dash-card" href="https://github.com/RSnew/xiaoerGame" target="_blank">
-      <span class="icon">🎮</span><h3>xiaoerGame</h3><p>Rust 游戏</p>
+
+    <!-- 神明对决 -->
+    <a class="proj-card rv" href="https://github.com/RSnew" target="_blank">
+      <div class="proj-accent" style="background:linear-gradient(90deg,#8b5cf6,#06b6d4)"></div>
+      <div class="proj-body">
+        <div class="proj-top">
+          <span class="proj-icon">⚔️</span>
+          <div>
+            <div class="proj-name">神明对决</div>
+            <span class="proj-status wip">开发中</span>
+          </div>
+        </div>
+        <p class="proj-desc">Godot 平台跳跃冒险游戏。玩家扮演凡人，在神明构筑的世界中翻越、投掷、与落石周旋。自制密码机分析系统辅助关卡设计。</p>
+        <div class="proj-tags">
+          <span class="tag">Godot 4</span><span class="tag">GDScript</span><span class="tag">平台跳跃</span>
+        </div>
+      </div>
+      <div class="proj-foot">
+        <span>私有仓库</span>
+      </div>
     </a>
-    <a class="card dash-card" href="https://github.com/RSnew/ImNotThinkingWhatIWant" target="_blank">
-      <span class="icon">📱</span><h3>iOS App</h3><p>Swift 应用</p>
+
+    <!-- QQ Bot -->
+    <a class="proj-card rv" href="https://github.com/RSnew" target="_blank">
+      <div class="proj-accent" style="background:linear-gradient(90deg,#3b82f6,#06b6d4)"></div>
+      <div class="proj-body">
+        <div class="proj-top">
+          <span class="proj-icon">🤖</span>
+          <div>
+            <div class="proj-name">小二 QQ 机器人</div>
+            <span class="proj-status active">运行中</span>
+          </div>
+        </div>
+        <p class="proj-desc">基于 NoneBot2 的 QQ 群管理机器人，集成 CharGLM 对话、抽卡系统、群活跃度分析、自动视频分析等能力。运行在 QEMU 虚拟机中（NapCat + QQ Linux）。</p>
+        <div class="proj-tags">
+          <span class="tag">Python</span><span class="tag">NoneBot2</span><span class="tag">CharGLM</span><span class="tag">QEMU</span>
+        </div>
+      </div>
+      <div class="proj-foot">
+        <span>私有仓库</span>
+      </div>
     </a>
+
+    <!-- xiaoerGame -->
+    <a class="proj-card rv" href="https://github.com/RSnew/xiaoerGame" target="_blank">
+      <div class="proj-accent" style="background:linear-gradient(90deg,#f59e0b,#ef4444)"></div>
+      <div class="proj-body">
+        <div class="proj-top">
+          <span class="proj-icon">🎮</span>
+          <div>
+            <div class="proj-name">xiaoerGame</div>
+            <span class="proj-status wip">开发中</span>
+          </div>
+        </div>
+        <p class="proj-desc">Rust 编写的游戏项目，探索高性能游戏引擎与系统级编程的结合，追求零依赖、极致性能的开发体验。</p>
+        <div class="proj-tags">
+          <span class="tag">Rust</span><span class="tag">游戏引擎</span><span class="tag">系统编程</span>
+        </div>
+      </div>
+      <div class="proj-foot">
+        <span>RSnew / xiaoerGame</span>
+        <a href="https://github.com/RSnew/xiaoerGame" target="_blank">查看 →</a>
+      </div>
+    </a>
+
   </div>
 </section>
 
-<!-- Machine Status -->
-<section id="machine">
-  <h2 class="stitle rv"><span class="bar"></span>本机状态</h2>
-  <div class="grid2 rv">
-    <div>
-      <div class="machine-grid" id="machine-stats">
-        <div class="m-stat"><div class="val" id="m-uptime">-</div><div class="lbl">运行时间</div></div>
-        <div class="m-stat"><div class="val" id="m-cpu">-</div><div class="lbl">CPU</div></div>
-        <div class="m-stat"><div class="val" id="m-mem">-</div><div class="lbl">内存</div></div>
-        <div class="m-stat"><div class="val" id="m-disk">-</div><div class="lbl">磁盘剩余</div></div>
+<!-- About -->
+<section id="about">
+  <h2 class="stitle rv"><span class="bar"></span>关于</h2>
+  <div class="about-grid">
+
+    <div class="about-card rv">
+      <h3>🧰 技术栈</h3>
+      <div class="skill-row">
+        <span class="skill primary">C++</span>
+        <span class="skill primary">Rust</span>
+        <span class="skill primary">Swift</span>
+        <span class="skill primary">Python</span>
+        <span class="skill">LLVM</span>
+        <span class="skill">Godot</span>
+        <span class="skill">Flutter</span>
+        <span class="skill">Vue</span>
+        <span class="skill">NoneBot2</span>
+        <span class="skill">Docker</span>
+        <span class="skill">Linux</span>
+        <span class="skill">SwiftUI</span>
       </div>
     </div>
-    <div class="card">
-      <h3 style="font-size:14px;margin-bottom:10px;color:var(--dk)">服务状态</h3>
-      <div class="svc-row" id="svc-list"></div>
-      <p style="font-size:11px;color:var(--t2);margin-top:12px" id="m-updated"></p>
+
+    <div class="about-card rv">
+      <h3>🌱 正在做</h3>
+      <ul class="now-list">
+        <li class="now-item"><span class="ei">🔥</span><span>为 Flux 语言实现 LLVM JIT 后端与热重载运行时</span></li>
+        <li class="now-item"><span class="ei">⚔️</span><span>神明对决关卡设计 — 落石机制与攀爬系统</span></li>
+        <li class="now-item"><span class="ei">🤖</span><span>小二机器人 — 视频分析与星辰系统迭代</span></li>
+      </ul>
     </div>
+
   </div>
 </section>
 
 <!-- Activity -->
 <section id="activity">
   <h2 class="stitle rv"><span class="bar"></span>最新动态</h2>
-  <div class="card rv" id="feed">
-    <div style="color:var(--t2);font-size:13px">加载中...</div>
+  <div class="feed-card rv">
+    <div class="feed-head">
+      <span class="feed-head-title" id="feed-time">加载中...</span>
+      <button class="refresh-btn" id="refresh-btn" onclick="refreshFeed()">
+        <span class="ri">↻</span> 刷新
+      </button>
+    </div>
+    <div id="feed"><div style="padding:20px;color:var(--t2);font-size:13px">加载中...</div></div>
   </div>
-</section>
-
-<!-- Game Wiki -->
-<section id="wiki">
-  <h2 class="stitle rv"><span class="bar"></span>游戏 Wiki</h2>
-  <div class="card rv">
-    <div class="wiki-tabs" id="wiki-tabs">
-      <span class="wiki-tab active" data-game="xiaoerGame">xiaoerGame</span>
-      <span class="wiki-tab" data-game="taiko">太鼓达人</span>
-    </div>
-    <div class="wiki-search">
-      <input type="text" id="wiki-input" placeholder="搜索 Wiki...">
-    </div>
-    <div id="wiki-results">
-      <div class="wiki-result" style="color:var(--t2)">输入关键词搜索游戏相关内容</div>
-    </div>
-  </div>
-</section>
-
-<!-- Projects (compact) -->
-<section id="projects">
-  <h2 class="stitle rv"><span class="bar"></span>项目</h2>
-  <div class="card rv" id="proj-list"></div>
-</section>
-
-<!-- Tech (compact) -->
-<section>
-  <h2 class="stitle rv"><span class="bar"></span>技术栈</h2>
-  <div class="rv" style="display:flex;gap:8px;flex-wrap:wrap" id="tech-tags"></div>
 </section>
 
 </div>
 
-<footer>纯手工打造 · 零依赖 · 极致性能</footer>
+<footer>
+  手工打造 · 零依赖 ·
+  <a href="https://github.com/RSnew/RSnew.github.io" target="_blank">源码</a>
+</footer>
 
 <script>
 // Scroll reveal
-const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('v')}),{threshold:.1,rootMargin:'0px 0px -30px 0px'});
-document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+const obs = new IntersectionObserver(
+  e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('v') }),
+  { threshold: .08, rootMargin: '0px 0px -20px 0px' }
+);
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
-// Island + progress
-const island=document.getElementById('island');
-window.addEventListener('scroll',()=>{
-  const s=window.scrollY,hH=300;
-  document.getElementById('progress').style.width=(s/(document.documentElement.scrollHeight-innerHeight)*100)+'%';
-  if(s>hH){island.classList.add('show','bar');island.classList.remove('expanded');clearTimeout(island._t);island._t=setTimeout(()=>{island.classList.remove('bar');island.classList.add('expanded')},300);}
-  else{island.classList.remove('show','bar','expanded');}
+// Island + progress bar
+const island = document.getElementById('island');
+window.addEventListener('scroll', () => {
+  const s = window.scrollY, hH = 280;
+  document.getElementById('progress').style.width =
+    (s / (document.documentElement.scrollHeight - innerHeight) * 100) + '%';
+  if (s > hH) {
+    island.classList.add('show', 'bar');
+    island.classList.remove('expanded');
+    clearTimeout(island._t);
+    island._t = setTimeout(() => {
+      island.classList.remove('bar');
+      island.classList.add('expanded');
+    }, 320);
+  } else {
+    island.classList.remove('show', 'bar', 'expanded');
+  }
 });
 
-// Color map for languages
-const langColors={'C++':'#659ad2','Rust':'#dea584','Swift':'#f05230','Python':'#3572a5','Java':'#b07219','HTML':'#e34c26','Vue':'#42b883'};
-
-// Render functions
-function renderStatus(d){
-  document.getElementById('m-uptime').textContent=d.uptime||'-';
-  document.getElementById('m-cpu').textContent=(d.cpu_pct||'-')+'%';
-  document.getElementById('m-mem').textContent=(d.memory_gb||'-')+'GB';
-  document.getElementById('m-disk').textContent=d.disk_free||'-';
-  document.getElementById('m-updated').textContent='更新于 '+d.updated;
-  const sl=document.getElementById('svc-list');
-  sl.innerHTML='';
-  for(const[k,v]of Object.entries(d.services||{})){
-    sl.innerHTML+=`<span class="svc ${v==='online'?'on':'off'}">${v==='online'?'●':'○'} ${k}</span>`;
+// Activity feed
+function renderFeed(events) {
+  const feed = document.getElementById('feed');
+  if (!events || !events.length) {
+    feed.innerHTML = '<div style="padding:20px;color:var(--t2);font-size:13px">暂无动态</div>';
+    return;
   }
-  const map={'PromptCraft':'svc-promptcraft','QQ Bot':'svc-qqbot','Danmaku':'svc-danmaku'};
-  for(const[k,id]of Object.entries(map)){
-    const el=document.getElementById(id);
-    if(el)el.className='status '+(d.services[k]==='online'?'on':'off');
-  }
+  feed.innerHTML = events.map(e => {
+    const repo = e.repo.split('/')[1];
+    return `<div class="feed-item">
+      <div class="feed-dot"></div>
+      <div>
+        <a class="feed-repo" href="https://github.com/${e.repo}" target="_blank">${repo}</a>
+        <span style="font-size:13px"> ${e.detail}</span>
+        <div class="feed-meta">${e.date}</div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-function renderActivity(events){
-  const feed=document.getElementById('feed');
-  feed.innerHTML='';
-  events.forEach(e=>{
-    const repo=e.repo.split('/')[1];
-    feed.innerHTML+=`<div class="feed-item"><div class="feed-dot"></div><div><a href="https://github.com/${e.repo}" target="_blank" style="color:var(--b1);text-decoration:none;font-weight:600">${repo}</a> ${e.detail}<div class="feed-date">${e.date}</div></div></div>`;
-  });
-  if(!feed.innerHTML)feed.innerHTML='<div style="color:var(--t2);font-size:13px">暂无动态</div>';
-}
-
-function renderRepos(repos){
-  const el=document.getElementById('proj-list');
-  el.innerHTML='';
-  repos.forEach(r=>{
-    const c=langColors[r.language]||'#999';
-    el.innerHTML+=`<div class="mini-proj"><span class="lang-dot" style="background:${c}"></span><a href="${r.url}" target="_blank">${r.name}</a><span style="color:var(--t2);font-size:12px;margin-left:auto">${r.language||''}</span></div>`;
-  });
-}
-
-// Load static data on page load
-async function loadStatic(){
-  try{
-    const[statusRes,dataRes]=await Promise.all([
-      fetch('./status.json?t='+Date.now()),
-      fetch('./data.json?t='+Date.now())
-    ]);
-    const status=await statusRes.json();
-    const data=await dataRes.json();
-    renderStatus(status);
-    renderActivity(data.activity||[]);
-    renderRepos(data.repos||[]);
-    document.getElementById('data-time').textContent='静态数据 · 更新于 '+(data.updated||'未知');
-  }catch(e){
-    document.getElementById('data-time').textContent='静态数据加载失败';
-    document.getElementById('m-uptime').textContent='离线';
-  }
-}
-loadStatic();
-
-// Refresh: fetch live data from GitHub API
-async function refreshAll(){
-  const btn=document.getElementById('refresh-btn');
+async function refreshFeed() {
+  const btn = document.getElementById('refresh-btn');
   btn.classList.add('loading');
-  btn.disabled=true;
-  document.getElementById('data-time').textContent='正在从 GitHub 获取最新数据...';
-  try{
-    const[eventsRes,reposRes,statusRes]=await Promise.all([
-      fetch('https://api.github.com/users/RSnew/events?per_page=10'),
-      fetch('https://api.github.com/users/RSnew/repos?sort=updated&per_page=8'),
-      fetch('./status.json?t='+Date.now())
-    ]);
-    // Activity
-    const rawEvents=await eventsRes.json();
-    const events=rawEvents.filter(e=>['PushEvent','PullRequestEvent','CreateEvent'].includes(e.type)).slice(0,8).map(e=>{
-      let detail='';
-      if(e.type==='PushEvent')detail=`推送了 ${e.payload.commits?.length||0} 个提交`;
-      else if(e.type==='PullRequestEvent')detail=`${e.payload.action} PR #${e.payload.pull_request?.number}`;
-      else if(e.type==='CreateEvent')detail=`创建了 ${e.payload.ref_type} ${e.payload.ref||''}`;
-      return{type:e.type,repo:e.repo.name,date:e.created_at.split('T')[0],detail};
-    });
-    renderActivity(events);
-    // Repos
-    const rawRepos=await reposRes.json();
-    renderRepos(rawRepos.map(r=>({name:r.name,url:r.html_url,language:r.language})));
-    // Status
-    try{renderStatus(await statusRes.json());}catch(e){}
-    const now=new Date().toLocaleString('zh-CN',{timeZone:'Asia/Shanghai'});
-    document.getElementById('data-time').textContent='实时数据 · 刷新于 '+now;
-  }catch(e){
-    document.getElementById('data-time').textContent='刷新失败，显示缓存数据';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://api.github.com/users/RSnew/events?per_page=12');
+    const raw = await res.json();
+    const events = raw
+      .filter(e => ['PushEvent','CreateEvent','PullRequestEvent'].includes(e.type))
+      .slice(0, 8)
+      .map(e => ({
+        type: e.type,
+        repo: e.repo.name,
+        date: e.created_at.split('T')[0],
+        detail: e.type === 'PushEvent'
+          ? `推送了 ${e.payload.commits?.length || 0} 个提交`
+          : e.type === 'CreateEvent'
+          ? `创建了 ${e.payload.ref_type} ${e.payload.ref || ''}`
+          : `${e.payload.action} PR #${e.payload.pull_request?.number}`
+      }));
+    renderFeed(events);
+    document.getElementById('feed-time').textContent = '实时数据 · 刚刚更新';
+  } catch {
+    document.getElementById('feed-time').textContent = '获取失败，显示静态数据';
     loadStatic();
-  }finally{
-    btn.classList.remove('loading');
-    btn.disabled=false;
+  }
+  btn.classList.remove('loading');
+  btn.disabled = false;
+}
+
+async function loadStatic() {
+  try {
+    const res = await fetch('./data.json?t=' + Date.now());
+    const d = await res.json();
+    renderFeed(d.activity || []);
+    document.getElementById('feed-time').textContent = '静态数据 · 更新于 ' + (d.updated || '未知');
+  } catch {
+    document.getElementById('feed-time').textContent = '数据加载失败';
   }
 }
 
-// Tech tags
-const techs=['C++','Rust','Swift','Python','Vue','Flutter','LLVM','Docker','Go','Java','SwiftUI','NoneBot'];
-const tEl=document.getElementById('tech-tags');
-techs.forEach(t=>{
-  const s=document.createElement('span');
-  s.textContent=t;
-  s.style.cssText='padding:6px 16px;border-radius:20px;background:var(--bl);color:var(--b1);font-size:13px;font-weight:600;transition:all .4s cubic-bezier(.34,1.56,.64,1);cursor:default';
-  s.onmouseenter=()=>{s.style.transform='translateY(-3px) scale(1.08)';s.style.background='var(--b1)';s.style.color='#fff';};
-  s.onmouseleave=()=>{s.style.transform='';s.style.background='var(--bl)';s.style.color='var(--b1)';};
-  tEl.appendChild(s);
-});
-
-// Wiki — grouped by category
-const wikiData={
-  xiaoerGame:{
-    '概览':[
-      {title:'游戏概述',desc:'xiaoerGame — Rust 构建的 QQ 群互动游戏'},
-      {title:'小二对决系统',desc:'RPG 对战玩法，玩家念咒语由 AI 判定效果，支持攻击/变化/治疗/束缚'},
-    ],
-    '属性与加点':[
-      {title:'六维属性',desc:'体力(HP)、灵智(魔攻/魔防)、想象(精攻/精防)、灵魂(护盾/HP/速度)、创造(精攻/护盾)、灵活(速度/闪避)'},
-      {title:'加点系统',desc:'1星尘=1点属性，单项最多+100，总共最多+250。基础值：体力100/灵智30/想象30/灵魂30/创造30/灵活50'},
-    ],
-    '战斗系统':[
-      {title:'战斗规则',desc:'速度决定先手，轮流出招，咒语威力0-30由AI判定，总伤害=威力+六维×0.4'},
-      {title:'犯规系统',desc:'秒杀/数值膨胀/连续攻击/无敌/掀桌子 → 跳过犯规方回合'},
-      {title:'场地效果',desc:'变化技能持续4回合，可封印对手变化能力，最多同时5个效果'},
-      {title:'束缚系统',desc:'束缚目标有15HP，被束缚者只能攻击束缚物挣脱，4回合自动消失'},
-    ],
-    '经济系统':[
-      {title:'星尘系统',desc:'聊天获得15-30✦/次（日上限100），抽奖重复获得星尘，摇骰子赢+35/输+25，对决双方+200'},
-      {title:'抽奖系统',desc:'每日一次，SSR 3%/SR 12%/R 35%/N 50%，可收藏小动物'},
-    ],
-    '社交与个性':[
-      {title:'性格修改卡',desc:'1500✦购买，可自定义小二对你的性格表现，AI预审+二次确认'},
-      {title:'好感度',desc:'隐藏属性-100~100，友好行为+1/不友好-1，每日最多变化5次，影响小二回复风格'},
-    ],
-  },
-  taiko:{
-    '项目概览':[
-      {title:'太鼓达人 Mac 版',desc:'TaikoMacOS — Swift + SpriteKit 从零重写的太鼓达人虹色版'},
-    ],
-    '数据处理':[
-      {title:'数据解密',desc:'AES-256-CBC 解密街机数据，支持 datatable/musicinfo.bin 和 fumen 谱面'},
-      {title:'谱面解析',desc:'FumenParser 解析 .bin 谱面格式，支持分支谱面(普通/达人/超人)'},
-    ],
-    '引擎与渲染':[
-      {title:'音频系统',desc:'NUS3BANK 音频容器解析 + vgmstream-cli 格式转换 + AVAudioEngine 播放'},
-      {title:'纹理系统',desc:'NUTexB 格式解析（BC7压缩），通过 Metal 渲染到 SpriteKit'},
-      {title:'Lumen UI',desc:'街机 UI 场景格式解析与渲染'},
-    ],
-    '游戏机制':[
-      {title:'判定窗口',desc:'Good ±25ms / OK ±75ms / Bad ±108ms，连击和魂槽系统'},
-    ],
-    '工具':[
-      {title:'YIN 音高检测',desc:'实时基频检测算法，用于 VoiceTrainer 嗓音训练'},
-      {title:'PeepoDrumKit',desc:'太鼓谱面编辑器，支持 TJA 格式导入导出'},
-    ],
-  },
-};
-let currentGame='xiaoerGame';
-document.querySelectorAll('.wiki-tab').forEach(tab=>{
-  tab.onclick=()=>{
-    document.querySelectorAll('.wiki-tab').forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    currentGame=tab.dataset.game;
-    renderWiki('');
-  };
-});
-document.getElementById('wiki-input').oninput=e=>renderWiki(e.target.value);
-function renderWiki(q){
-  const el=document.getElementById('wiki-results');
-  const groups=wikiData[currentGame]||{};
-  let html='';
-  for(const[cat,items]of Object.entries(groups)){
-    const filtered=items.filter(i=>!q||i.title.includes(q)||i.desc.includes(q));
-    if(!filtered.length)continue;
-    html+=`<div class="wiki-group"><div class="wiki-group-title">${cat}</div>`;
-    html+=filtered.map(i=>`<div class="wiki-result"><strong>${i.title}</strong><br><span style="color:var(--t2)">${i.desc}</span></div>`).join('');
-    html+='</div>';
-  }
-  if(!html)html='<div class="wiki-result" style="color:var(--t2)">没有找到相关内容</div>';
-  el.innerHTML=html;
-}
-renderWiki('');
+loadStatic();
 </script>
 </body>
 </html>
