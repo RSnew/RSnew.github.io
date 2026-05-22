@@ -51,14 +51,14 @@
     ],
     "repos": [
         {
-            "language": null,
-            "name": "RSnew",
-            "url": "https://github.com/RSnew/RSnew"
-        },
-        {
             "language": "HTML",
             "name": "RSnew.github.io",
             "url": "https://github.com/RSnew/RSnew.github.io"
+        },
+        {
+            "language": null,
+            "name": "RSnew",
+            "url": "https://github.com/RSnew/RSnew"
         },
         {
             "language": "JavaScript",
@@ -91,5 +91,5 @@
             "url": "https://github.com/RSnew/ImNotThinkingWhatIWant"
         }
     ],
-    "updated": "2026-05-21 19:42 UTC"
+    "updated": "2026-05-22 02:12 UTC"
 }
