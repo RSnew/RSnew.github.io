@@ -2,8 +2,8 @@
   "uptime": "14 days",
   "load": "",
   "memory_gb": ,
-  "disk_free": "13Gi",
-  "cpu_pct": "375",
+  "disk_free": "18Gi",
+  "cpu_pct": "373",
   "services": {
     "QQ Bot": "offline",
     "NapCat": "online",
@@ -11,5 +11,5 @@
     "Danmaku": "offline",
     "PromptCraft": "offline"
   },
-  "updated": "2026-05-31 13:12 UTC"
+  "updated": "2026-05-31 19:01 UTC"
 }
